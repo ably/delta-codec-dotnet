@@ -15,7 +15,7 @@ namespace MiscUtil.Compression.Vcdiff.Test
             get
             {
                 string currentDirectory = Path.GetDirectoryName(typeof(VcdiffDecoderFixture).Assembly.Location);
-                string xdeltaTestDataPath = "TestData\\xdelta";
+                string xdeltaTestDataPath = Path.Combine("TestData", "xdelta");
                 foreach (string dir in Directory.EnumerateDirectories(Path.Combine(currentDirectory, xdeltaTestDataPath)))
                 {
                     yield return new TestCaseData(dir).SetArgDisplayNames(Path.Combine(xdeltaTestDataPath, Path.GetFileName(dir)));
