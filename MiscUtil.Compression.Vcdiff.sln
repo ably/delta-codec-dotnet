@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiscUtil.Compression.Vcdiff", "MiscUtil.Compression.Vcdiff\MiscUtil.Compression.Vcdiff.csproj", "{FDD665C4-DF7B-4A07-A281-C2E187D8E82C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiscUtil.Compression.Vcdiff.Test", "MiscUtil.Compression.Vcdiff.Test\MiscUtil.Compression.Vcdiff.Test.csproj", "{5E002924-8D30-40D5-833A-17BE32E6502B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{FDD665C4-DF7B-4A07-A281-C2E187D8E82C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDD665C4-DF7B-4A07-A281-C2E187D8E82C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDD665C4-DF7B-4A07-A281-C2E187D8E82C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E002924-8D30-40D5-833A-17BE32E6502B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E002924-8D30-40D5-833A-17BE32E6502B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E002924-8D30-40D5-833A-17BE32E6502B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E002924-8D30-40D5-833A-17BE32E6502B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
