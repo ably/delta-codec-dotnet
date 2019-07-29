@@ -6,5 +6,5 @@ matrix:
       mono: none
       env: DOTNETCORE=true
     - mono: latest
-install: ./Build/install.sh
-script: ./Build/script.sh
+install: Build/install.sh
+script: Build/script.sh
