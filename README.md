@@ -1,4 +1,7 @@
 # MiscUtil.Compression.Vcdiff
+
+[![Build Status](https://travis-ci.org/ably-forks/MiscUtil.Compression.Vcdiff.svg?branch=master)](https://travis-ci.org/ably-forks/MiscUtil.Compression.Vcdiff)
+
 C# VCDiff application library authored by [Jon Skeet and Marc Gravell](https://jonskeet.uk/csharp/miscutil/) and forked by Ably
 
 # Release procedure
