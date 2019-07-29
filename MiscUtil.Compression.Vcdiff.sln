@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiscUtil.Compression.Vcdiff", "MiscUtil.Compression.Vcdiff\MiscUtil.Compression.Vcdiff.csproj", "{FDD665C4-DF7B-4A07-A281-C2E187D8E82C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiscUtil.Compression.Vcdiff", "MiscUtil.Compression.Vcdiff\MiscUtil.Compression.Vcdiff.csproj", "{FDD665C4-DF7B-4A07-A281-C2E187D8E82C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiscUtil.Compression.Vcdiff.Test", "MiscUtil.Compression.Vcdiff.Test\MiscUtil.Compression.Vcdiff.Test.csproj", "{5E002924-8D30-40D5-833A-17BE32E6502B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MiscUtil.Compression.Vcdiff.Test", "MiscUtil.Compression.Vcdiff.Test\MiscUtil.Compression.Vcdiff.Test.csproj", "{5E002924-8D30-40D5-833A-17BE32E6502B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

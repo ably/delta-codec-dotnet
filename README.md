@@ -4,7 +4,7 @@ C# VCDiff application library authored by [Jon Skeet and Marc Gravell](https://j
 # Release procedure
 
 ### Prerequisites
-- MSBuild 15.1+
+- `dotnet` in PATH
 - `git` in PATH
 
 ### Checklist

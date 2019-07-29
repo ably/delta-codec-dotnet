@@ -8,5 +8,10 @@ if (!(Get-Command -Name 'git' -ErrorAction SilentlyContinue)) {
   Exit -1
 }
 
+if (!(Get-Command -Name 'dotnet' -ErrorAction SilentlyContinue)) {
+  "dotnet not found in PATH"
+  Exit -2
+}
+
 git push origin $version
-.\Binaries\nuget push MiscUtil.Compression.Vcdiff\bin\Release\MiscUtil.Compression.Vcdiff.$version.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey $apiKey
+dotnet nuget push MiscUtil.Compression.Vcdiff\bin\Release\MiscUtil.Compression.Vcdiff.$version.nupkg --source https://api.nuget.org/v3/index.json --api-key $apiKey

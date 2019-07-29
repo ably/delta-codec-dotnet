@@ -5,7 +5,6 @@ namespace MiscUtil.Compression.Vcdiff
 	/// <summary>
 	/// Summary description for VcdiffFormatException.
 	/// </summary>
-	[Serializable()]
 	public class VcdiffFormatException : Exception
 	{
 		internal VcdiffFormatException(string message) : base (message)
