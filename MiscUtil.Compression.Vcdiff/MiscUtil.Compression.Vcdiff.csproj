@@ -10,7 +10,7 @@
     <PackageLicenseFile>licence.txt</PackageLicenseFile>
     <RepositoryUrl>https://github.com/ably-forks/MiscUtil.Compression.Vcdiff</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>vcdiff</PackageTags>
+    <PackageTags>vcdiff;delta;patch;MiscUtil</PackageTags>
     <PackageProjectUrl>https://jonskeet.uk/csharp/miscutil/</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
