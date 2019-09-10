@@ -41,9 +41,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MiscUtil.Compression.Vcdiff\MiscUtil.Compression.Vcdiff.csproj">
+    <ProjectReference Include="..\DeltaCodec\DeltaCodec.csproj">
       <Project>{fdd665c4-df7b-4a07-a281-c2e187d8e82c}</Project>
-      <Name>MiscUtil.Compression.Vcdiff</Name>
+      <Name>DeltaCodec</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

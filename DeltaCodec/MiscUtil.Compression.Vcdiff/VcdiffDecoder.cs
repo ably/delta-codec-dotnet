@@ -8,7 +8,7 @@ namespace MiscUtil.Compression.Vcdiff
 	/// <summary>
 	/// Decoder for VCDIFF (RFC 3284) streams.
 	/// </summary>
-	public sealed class VcdiffDecoder
+	internal sealed class VcdiffDecoder
 	{
 		#region Fields
 		/// <summary>

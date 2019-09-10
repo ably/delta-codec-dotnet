@@ -5,16 +5,16 @@ using System.Linq;
 
 using NUnit.Framework;
 
-namespace MiscUtil.Compression.Vcdiff.Test
+namespace DeltaCodec.Test
 {
     [TestFixture]
-    public class VcdiffDecoderFixture
+    public class MiscUtilVcdiffDecoderFixture
     {
         public static IEnumerable<TestCaseData> XdeltaTestCases
         {
             get
             {
-                string currentDirectory = Path.GetDirectoryName(typeof(VcdiffDecoderFixture).Assembly.Location);
+                string currentDirectory = Path.GetDirectoryName(typeof(MiscUtilVcdiffDecoderFixture).Assembly.Location);
                 string xdeltaTestDataPath = Path.Combine("TestData", "xdelta");
                 foreach (string dir in Directory.EnumerateDirectories(Path.Combine(currentDirectory, xdeltaTestDataPath)))
                 {
@@ -23,7 +23,7 @@ namespace MiscUtil.Compression.Vcdiff.Test
             }
         }
 
-        [TestCaseSource(typeof(VcdiffDecoderFixture), "XdeltaTestCases")]
+        [TestCaseSource(typeof(MiscUtilVcdiffDecoderFixture), "XdeltaTestCases")]
         public void DecodeXdeltaPatch(string testCasePath)
         {
             string dictionaryPath = Path.Combine(testCasePath, "dictionary");
@@ -36,7 +36,7 @@ namespace MiscUtil.Compression.Vcdiff.Test
                 using (FileStream delta = File.OpenRead(deltaPath))
                 using (MemoryStream decodedStream = new MemoryStream())
                 {
-                    VcdiffDecoder.Decode(dictionary, delta, decodedStream);
+                    MiscUtil.Compression.Vcdiff.VcdiffDecoder.Decode(dictionary, delta, decodedStream);
                     decoded = decodedStream.ToArray();
                 }
             }

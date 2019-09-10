@@ -6,7 +6,7 @@ namespace MiscUtil.Checksum
 	/// Implementation of the Adler32 checksum routine.
 	/// TODO: Derive from HashAlgorithm.
 	/// </summary>
-	public class Adler32
+	internal class Adler32
 	{
         /// <summary>
         /// Base for modulo arithmetic
