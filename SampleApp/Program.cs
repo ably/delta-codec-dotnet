@@ -7,37 +7,49 @@ using IO.Ably;
 using IO.Ably.Realtime;
 
 using DeltaCodec;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace TestApp
 {
     class Program
     {
+        
+
         static async Task Main(string[] args)
         {
             AblyRealtime ably = new AblyRealtime("HG2KVw.AjZP_A:W7VXUG9yw1-Cza6u");
             IRealtimeChannel channel = ably.Channels.Get("[?delta=vcdiff]delta-sample-app");
-            VcdiffDecoder channelDecoder = new VcdiffDecoder();
+            var channelDecoder = new DeltaDecoder();
             channel.Subscribe(message =>
             {
-                object data = message.Data;
+                var data =  message.Data;
                 try
                 {
-                    if (VcdiffDecoder.IsDelta(data))
+                    if(message.Encoding.Contains("vcdiff"))
                     {
-                        data = channelDecoder.ApplyDelta(data).AsObject();
+                        var bytes = Helpers.ConvertToByteArray(data);
+                        Console.WriteLine("Processing delta - Message size: " + bytes.Length);
+                        if(DeltaDecoder.IsDelta(bytes) == false)
+                            throw new Exception("Something went wrong");
+
+                        var decodedData = channelDecoder.ApplyDelta(bytes).AsByteArray();
+                        data = JObject.Parse(UTF8Encoding.UTF8.GetString(decodedData));
                     }
-                    else
+                    else 
                     {
-                        channelDecoder.SetBase(data);
+                        var serialisedObject = JsonConvert.SerializeObject(data);
+                        channelDecoder.SetBase(serialisedObject.GetBytes());
                     }
                 }
                 catch (Exception e)
                 {
                     /* Delta decoder error */
+                    Console.WriteLine(e.Message);
                 }
 
                 /* Process decoded data */
-                Console.WriteLine(JsonHelper.DeserializeObject<Data>(data as JObject));
+                Console.WriteLine(((JObject)data).ToObject<Data>());
             });
             ably.Connection.On(ConnectionEvent.Connected, change =>
             {
@@ -69,6 +81,54 @@ namespace TestApp
             public override string ToString()
             {
                 return $"foo = {this.foo}; count = {this.count}; status = {this.status}";
+            }
+        }
+    }
+
+    public static class Helpers
+    {
+        public static byte[] ConvertToByteArray(object data)
+        {
+            if (data is byte[])
+            {
+                return data as byte[];
+            }
+            else if (data is string)
+            {
+                string dataAsString = data as string;
+                return TryConvertFromBase64String(dataAsString, out byte[] result) ? result : Encoding.UTF8.GetBytes(dataAsString);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
+        }
+
+        public static bool TryConvertToDeltaByteArray(object obj, out byte[] delta)
+        {
+            byte[] dataAsByteArray = obj as byte[];
+            string dataAsString = obj as string;
+            if (dataAsByteArray != null || (dataAsString != null && TryConvertFromBase64String(dataAsString, out dataAsByteArray)))
+            {
+                delta = dataAsByteArray;
+                return true;
+            }
+
+            delta = null;
+            return false;
+        }
+
+        public static bool TryConvertFromBase64String(string str, out byte[] result)
+        {
+            result = null;
+            try
+            {
+                result = Convert.FromBase64String(str);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
             }
         }
     }

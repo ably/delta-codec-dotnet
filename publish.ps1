@@ -14,4 +14,4 @@ if (!(Get-Command -Name 'dotnet' -ErrorAction SilentlyContinue)) {
 }
 
 git push origin $version
-dotnet nuget push MiscUtil.Compression.Vcdiff\bin\Release\MiscUtil.Compression.Vcdiff.$version.nupkg --source https://api.nuget.org/v3/index.json --api-key $apiKey
+dotnet nuget push DeltaCodec\bin\Release\DeltaCodec.$version.nupkg --source https://api.nuget.org/v3/index.json --api-key $apiKey

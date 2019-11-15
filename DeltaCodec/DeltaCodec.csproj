@@ -16,7 +16,4 @@
   <ItemGroup>
     <None Include="../licence.txt" Pack="true" PackagePath="licence.txt" Visible="false" />
   </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
-  </ItemGroup>
 </Project>

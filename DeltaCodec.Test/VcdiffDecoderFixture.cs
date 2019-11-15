@@ -36,7 +36,7 @@ namespace DeltaCodec.Test
                 using (FileStream delta = File.OpenRead(deltaPath))
                 using (MemoryStream decodedStream = new MemoryStream())
                 {
-                    MiscUtil.Compression.Vcdiff.VcdiffDecoder.Decode(dictionary, delta, decodedStream);
+                    DeltaCodec.Vcdiff.VcdiffDecoder.Decode(dictionary, delta, decodedStream);
                     decoded = decodedStream.ToArray();
                 }
             }

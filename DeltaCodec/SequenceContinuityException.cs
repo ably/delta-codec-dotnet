@@ -3,7 +3,7 @@
 namespace DeltaCodec
 {
     /// <summary>
-    /// Thrown when <see cref="VcdiffDecoder"/>'s built-in sequence continuity check fails
+    /// Thrown when <see cref="DeltaDecoder"/>'s built-in sequence continuity check fails
     /// </summary>
     public class SequenceContinuityException : Exception
     {

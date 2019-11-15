@@ -1,4 +1,4 @@
-# MiscUtil.Compression.Vcdiff
+# DeltaCodec
 
 [![Build Status](https://travis-ci.org/ably-forks/MiscUtil.Compression.Vcdiff.svg?branch=master)](https://travis-ci.org/ably-forks/MiscUtil.Compression.Vcdiff)
 [![NuGet version](https://badge.fury.io/nu/MiscUtil.Compression.Vcdiff.svg)](https://badge.fury.io/nu/MiscUtil.Compression.Vcdiff)
