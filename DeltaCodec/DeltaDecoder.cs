@@ -3,6 +3,7 @@ using System.IO;
 
 namespace DeltaCodec
 {
+
     /// <summary>
     /// VCDIFF decoder capable of processing continuous sequences of consecutively generated VCDIFFs
     /// </summary>
@@ -47,14 +48,21 @@ namespace DeltaCodec
             {
                 throw new ArgumentException($"The provided {nameof(delta)} is not a valid VCDIFF delta");
             }
+            
+            var result = ApplyDelta(this.@base, delta);
+            this.@base = result.AsByteArray();
+            this.baseId = deltaId;
+            return result;
+        }
+
+        public static DeltaApplicationResult ApplyDelta(byte[] @base, byte[] delta)
+        {
             using (MemoryStream baseStream = new MemoryStream(@base))
             using (MemoryStream deltaStream = new MemoryStream(delta))
             using (MemoryStream decodedStream = new MemoryStream())
             {
                 DeltaCodec.Vcdiff.VcdiffDecoder.Decode(baseStream, deltaStream, decodedStream);
-                this.@base = decodedStream.ToArray();
-                this.baseId = deltaId;
-                // Return a copy to avoid future delta application failures if the returned array is modified
+
                 return new DeltaApplicationResult(decodedStream.ToArray());
             }
         }

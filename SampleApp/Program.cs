@@ -28,7 +28,7 @@ namespace TestApp
                 {
                     if(message.Encoding.Contains("vcdiff"))
                     {
-                        var bytes = Helpers.ConvertToByteArray(data);
+                        var bytes = DataHelpers.ConvertToByteArray(data);
                         Console.WriteLine("Processing delta - Message size: " + bytes.Length);
                         if(DeltaDecoder.IsDelta(bytes) == false)
                             throw new Exception("Something went wrong");
@@ -81,54 +81,6 @@ namespace TestApp
             public override string ToString()
             {
                 return $"foo = {this.foo}; count = {this.count}; status = {this.status}";
-            }
-        }
-    }
-
-    public static class Helpers
-    {
-        public static byte[] ConvertToByteArray(object data)
-        {
-            if (data is byte[])
-            {
-                return data as byte[];
-            }
-            else if (data is string)
-            {
-                string dataAsString = data as string;
-                return TryConvertFromBase64String(dataAsString, out byte[] result) ? result : Encoding.UTF8.GetBytes(dataAsString);
-            }
-            else
-            {
-                throw new ArgumentException();
-            }
-        }
-
-        public static bool TryConvertToDeltaByteArray(object obj, out byte[] delta)
-        {
-            byte[] dataAsByteArray = obj as byte[];
-            string dataAsString = obj as string;
-            if (dataAsByteArray != null || (dataAsString != null && TryConvertFromBase64String(dataAsString, out dataAsByteArray)))
-            {
-                delta = dataAsByteArray;
-                return true;
-            }
-
-            delta = null;
-            return false;
-        }
-
-        public static bool TryConvertFromBase64String(string str, out byte[] result)
-        {
-            result = null;
-            try
-            {
-                result = Convert.FromBase64String(str);
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
             }
         }
     }
