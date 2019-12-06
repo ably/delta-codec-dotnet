@@ -47,7 +47,7 @@ namespace IO.Ably.DeltaCodec.Test
             }
 
             byte[] target = File.ReadAllBytes(targetPath);
-            Assert.IsTrue(target.SequenceEqual(decoded), "Delta applicaiton result does not match the expected target file.");
+            Assert.IsTrue(target.SequenceEqual(decoded), "Delta application result does not match the expected target file.");
         }
     }
 }
