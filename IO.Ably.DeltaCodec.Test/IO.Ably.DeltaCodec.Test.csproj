@@ -41,7 +41,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DeltaCodec\DeltaCodec.csproj">
+    <ProjectReference Include="..\IO.Ably.DeltaCodec\IO.Ably.DeltaCodec.csproj">
       <Project>{fdd665c4-df7b-4a07-a281-c2e187d8e82c}</Project>
       <Name>DeltaCodec</Name>
     </ProjectReference>

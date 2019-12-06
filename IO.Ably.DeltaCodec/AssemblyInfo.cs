@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("DeltaCodec.Test")]
+[assembly: InternalsVisibleTo("IO.Ably.DeltaCodec.Test")]
