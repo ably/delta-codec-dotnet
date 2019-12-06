@@ -5,7 +5,7 @@ using System.Linq;
 
 using NUnit.Framework;
 
-namespace DeltaCodec.Test
+namespace IO.Ably.DeltaCodec.Test
 {
     [TestFixture]
     public class MiscUtilVcdiffDecoderFixture

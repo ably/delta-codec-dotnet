@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace DeltaCodec.Vcdiff
+namespace IO.Ably.DeltaCodec.Vcdiff
 {
 	/// <summary>
 	/// Implementation of the Adler32 checksum routine.

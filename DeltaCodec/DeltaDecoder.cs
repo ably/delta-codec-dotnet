@@ -1,11 +1,10 @@
 ﻿using System;
 using System.IO;
 
-namespace DeltaCodec
+namespace IO.Ably.DeltaCodec
 {
-
     /// <summary>
-    /// VCDIFF decoder capable of processing continuous sequences of consecutively generated VCDIFFs
+    /// VCDIFF decoder capable of processing continuous sequences of consecutively generated VCDIFFs.
     /// </summary>
     public class DeltaDecoder
     {

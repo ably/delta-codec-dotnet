@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace DeltaCodec
+namespace IO.Ably.DeltaCodec
 {
     /// <summary>
     /// Contains and manages the result of delta application

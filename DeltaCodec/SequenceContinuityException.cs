@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DeltaCodec
+namespace IO.Ably.DeltaCodec
 {
     /// <summary>
     /// Thrown when <see cref="DeltaDecoder"/>'s built-in sequence continuity check fails

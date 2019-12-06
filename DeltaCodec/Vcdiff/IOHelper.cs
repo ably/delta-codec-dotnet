@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace DeltaCodec.Vcdiff
+namespace IO.Ably.DeltaCodec.Vcdiff
 {
 	/// <summary>
 	/// A few IO routines to make life easier. Most are basically available

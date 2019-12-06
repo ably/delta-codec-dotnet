@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace DeltaCodec
+namespace IO.Ably.DeltaCodec
 {
     public static class DataHelpers
     {

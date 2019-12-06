@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace DeltaCodec.Vcdiff
+namespace IO.Ably.DeltaCodec.Vcdiff
 {
 	/// <summary>
 	/// Decoder for VCDIFF (RFC 3284) streams.

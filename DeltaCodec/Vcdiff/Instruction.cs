@@ -1,5 +1,5 @@
 
-namespace DeltaCodec.Vcdiff
+namespace IO.Ably.DeltaCodec.Vcdiff
 {
 	/// <summary>
 	/// Contains the information for a single instruction

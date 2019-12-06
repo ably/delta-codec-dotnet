@@ -1,6 +1,6 @@
 using System;
 
-namespace DeltaCodec.Vcdiff
+namespace IO.Ably.DeltaCodec.Vcdiff
 {
 	/// <summary>
 	/// Summary description for VcdiffFormatException.
