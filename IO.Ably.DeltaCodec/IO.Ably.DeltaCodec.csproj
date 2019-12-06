@@ -4,16 +4,16 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <!-- Workaround to include the .pdb in the NuGet. See https://github.com/NuGet/Home/issues/4142#issuecomment-341867400 -->
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <Description>C# VCDiff application library</Description>
-    <Authors>Jon Skeet, Marc Gravell</Authors>
-    <Copyright>Copyright (c) 2004-2008 Jon Skeet and Marc Gravell. All rights reserved.</Copyright>
-    <PackageLicenseFile>licence.txt</PackageLicenseFile>
-    <RepositoryUrl>https://github.com/ably-forks/MiscUtil.Compression.Vcdiff</RepositoryUrl>
+    <Description>C# VCDiff decode library</Description>
+    <Authors>Martin Georgiev, Jon Skeet, Marc Gravell</Authors>
+    <Copyright>Copyright (c) 2019 Ably. All rights reserved.</Copyright>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/ably/delta-codec-dotnet</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>vcdiff;delta;patch;MiscUtil</PackageTags>
-    <PackageProjectUrl>https://jonskeet.uk/csharp/miscutil/</PackageProjectUrl>
+    <PackageTags>vcdiff;delta;patch;ably</PackageTags>
+    <PackageProjectUrl>https://github.com/ably/delta-codec-dotnet</PackageProjectUrl>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="../licence.txt" Pack="true" PackagePath="licence.txt" Visible="false" />
+    <None Include="../LICENSE" Pack="true" PackagePath="LICENSE" Visible="false" />
   </ItemGroup>
 </Project>
