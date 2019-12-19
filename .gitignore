@@ -145,6 +145,9 @@ _TeamCity*
 *.coverage
 *.coveragexml
 
+# Rider work folder
+.idea/
+
 # NCrunch
 _NCrunch_*
 .*crunch*.local.xml
