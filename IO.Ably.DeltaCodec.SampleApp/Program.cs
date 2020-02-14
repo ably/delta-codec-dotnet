@@ -138,12 +138,9 @@ namespace IO.Ably.DeltaCodec.SampleApp
                 .Build();
             _client = factory.CreateMqttClient();
             _client.UseApplicationMessageReceivedHandler(OnSubscriberMessageReceived);
-            _client.UseConnectedHandler(async e =>
+            _client.UseConnectedHandler(e =>
             {
                 Console.WriteLine("### CONNECTED WITH SERVER ###");
-
-                // Subscribe to a topic
-
             });
         }
 
