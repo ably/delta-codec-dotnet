@@ -66,7 +66,7 @@ public class ConsumerSample
         {
             var ablyApiKey = "REPLACE WITH API KEY";
             var keyParts = ablyApiKey.Split(":");
-            
+
             var factory = new MqttFactory();
             _options = new MqttClientOptionsBuilder()
                 .WithClientId("consumer")
@@ -149,4 +149,4 @@ To see what has changed in recent versions, see the [CHANGELOG](CHANGELOG.md).
 
 ## License
 
-Copyright (c) 2019 Ably Real-time Ltd, Licensed under the Apache License, Version 2.0.  Refer to [LICENSE](LICENSE) for the license terms.
+Copyright (c) 2020 Ably Real-time Ltd, Licensed under the Apache License, Version 2.0.  Refer to [LICENSE](LICENSE) for the license terms.
