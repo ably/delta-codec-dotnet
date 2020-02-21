@@ -16,22 +16,26 @@ namespace IO.Ably.DeltaCodec.SampleApp
 
         static async Task Main(string[] args)
         {
-            //HookupLogger();
+            //HookupMQTTLogger(); // To enable MQTT Debug messages, uncomment this line.
+
             Console.WriteLine("Using channel: " + ChannelName);
             Console.WriteLine("Args: " + string.Join(",", args));
             bool isBinarySample = args.Length > 0 && args[0] == "binary";
 
+            var ablyKey = "REPLACE WITH ABLY KEY";
             var factory = new MqttFactory();
-            var consumer = new Consumer(factory);
-            var producer = new Producer(factory, isBinarySample);
+            var consumer = new Consumer(factory, ablyKey);
+            var producer = new Producer(factory, isBinarySample, ablyKey);
 
             await consumer.Start();
             Task.Run(() => producer.Start());
 
+            Console.WriteLine("Press ENTER to quit the app");
             Console.ReadLine();
         }
 
-        private static void HookupLogger()
+        // Can be used to print debug information from the MQTT Transport
+        private static void HookupMQTTLogger()
         {
             MqttNetGlobalLogger.LogMessagePublished += (s, e) =>
             {
@@ -81,12 +85,13 @@ namespace IO.Ably.DeltaCodec.SampleApp
             },
         };
 
-        public Producer(MqttFactory factory, bool isBinary)
+        public Producer(MqttFactory factory, bool isBinary, string ablyKey)
         {
+            var parts = ablyKey.Split(":");
             _options = new MqttClientOptionsBuilder()
                 .WithClientId("producer")
                 .WithTcpServer("mqtt.ably.io", 8883)
-                .WithCredentials("oFpaLg.mB7oiw", "WP5kW-Mrk96MTaFq")
+                .WithCredentials(parts[0], parts[1])
                 .WithTls()
                 .Build();
             _client = factory.CreateMqttClient();
@@ -121,19 +126,19 @@ namespace IO.Ably.DeltaCodec.SampleApp
 
     }
 
-
     public class Consumer
     {
         private IMqttClientOptions _options;
         private IMqttClient _client;
         private DeltaDecoder _decoder = new DeltaDecoder();
 
-        public Consumer(MqttFactory factory)
+        public Consumer(MqttFactory factory, string ablyKey)
         {
+            var parts = ablyKey.Split(":");
             _options = new MqttClientOptionsBuilder()
                 .WithClientId("consumer")
                 .WithTcpServer("mqtt.ably.io", 8883)
-                .WithCredentials("oFpaLg.mB7oiw", "WP5kW-Mrk96MTaFq")
+                .WithCredentials(parts[0], parts[1])
                 .WithTls()
                 .Build();
             _client = factory.CreateMqttClient();
