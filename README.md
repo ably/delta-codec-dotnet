@@ -64,11 +64,14 @@ public class ConsumerSample
 
         public ConsumerSample()
         {
+            var ablyApiKey = "REPLACE WITH API KEY";
+            var keyParts = ablyApiKey.Split(":");
+            
             var factory = new MqttFactory();
             _options = new MqttClientOptionsBuilder()
                 .WithClientId("consumer")
                 .WithTcpServer("mqtt.ably.io", 8883)
-                .WithCredentials("oFpaLg.mB7oiw", "WP5kW-Mrk96MTaFq")
+                .WithCredentials(keyParts[0], keyParts[1])
                 .WithTls()
                 .Build();
             _client = factory.CreateMqttClient();

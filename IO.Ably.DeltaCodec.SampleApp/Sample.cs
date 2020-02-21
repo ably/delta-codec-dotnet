@@ -7,6 +7,8 @@ using MQTTnet.Client.Options;
 
 namespace IO.Ably.DeltaCodec.SampleApp
 {
+    // This code can be found in the Main repo README file. 
+    // It's here to make sure it compiles
     public class ConsumerSample
     {
         private IMqttClientOptions _options;
@@ -15,11 +17,13 @@ namespace IO.Ably.DeltaCodec.SampleApp
 
         public ConsumerSample()
         {
+            var ablyApiKey = "REPLACE WITH API KEY";
+            var keyParts = ablyApiKey.Split(":");
             var factory = new MqttFactory();
             _options = new MqttClientOptionsBuilder()
                 .WithClientId("consumer")
                 .WithTcpServer("mqtt.ably.io", 8883)
-                .WithCredentials("oFpaLg.mB7oiw", "WP5kW-Mrk96MTaFq")
+                .WithCredentials(keyParts[0], keyParts[1])
                 .WithTls()
                 .Build();
             _client = factory.CreateMqttClient();
