@@ -57,72 +57,71 @@ using MQTTnet.Client;
 using MQTTnet.Client.Options;
 
 public class ConsumerSample
+{
+    private IMqttClientOptions _options;
+    private IMqttClient _client;
+    private DeltaDecoder _decoder = new DeltaDecoder();
+
+    public ConsumerSample()
     {
-        private IMqttClientOptions _options;
-        private IMqttClient _client;
-        private DeltaDecoder _decoder = new DeltaDecoder();
-
-        public ConsumerSample()
+        var ablyApiKey = "REPLACE WITH API KEY";
+        var keyParts = ablyApiKey.Split(":");
+        var factory = new MqttFactory();
+        _options = new MqttClientOptionsBuilder()
+            .WithClientId("consumer")
+            .WithTcpServer("mqtt.ably.io", 8883)
+            .WithCredentials(keyParts[0], keyParts[1])
+            .WithTls()
+            .Build();
+        _client = factory.CreateMqttClient();
+        _client.UseApplicationMessageReceivedHandler(OnSubscriberMessageReceived);
+        _client.UseConnectedHandler(e =>
         {
-            var ablyApiKey = "REPLACE WITH API KEY";
-            var keyParts = ablyApiKey.Split(":");
+            Console.WriteLine("### CONNECTED WITH SERVER ###");
+        });
+    }
 
-            var factory = new MqttFactory();
-            _options = new MqttClientOptionsBuilder()
-                .WithClientId("consumer")
-                .WithTcpServer("mqtt.ably.io", 8883)
-                .WithCredentials(keyParts[0], keyParts[1])
-                .WithTls()
-                .Build();
-            _client = factory.CreateMqttClient();
-            _client.UseApplicationMessageReceivedHandler(OnSubscriberMessageReceived);
-            _client.UseConnectedHandler(async e =>
+    private string ChannelName => $"[?delta=vcdiff]{Program.ChannelName}";
+
+    public async Task Start()
+    {
+        Console.WriteLine("Connecting Consumer");
+        await _client.ConnectAsync(_options);
+        await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(ChannelName).Build());
+        Console.WriteLine("### SUBSCRIBED ###");
+    }
+
+    private void OnSubscriberMessageReceived(MqttApplicationMessageReceivedEventArgs messageArgs)
+    {
+        var message = DecodeStringMessage();
+        var stats =
+            $"Payload Size: {messageArgs.ApplicationMessage.Payload.Length}. Decoded Message Size: {message.Length}. Saving: {message.Length - messageArgs.ApplicationMessage.Payload.Length}";
+        var item = $"Timestamp: {DateTime.Now:O} | Stats: {stats} | Topic: {messageArgs.ApplicationMessage.Topic} | Payload: {message} | QoS: {messageArgs.ApplicationMessage.QualityOfServiceLevel}";
+        Console.WriteLine(item);
+
+        string DecodeStringMessage()
+        {
+            try
             {
-                Console.WriteLine("### CONNECTED WITH SERVER ###");
-            });
-        }
+                var payload = messageArgs.ApplicationMessage.Payload;
+                if (DeltaDecoder.IsDelta(payload))
+                {
+                    var result = _decoder.ApplyDelta(payload);
+                    return result.AsUtf8String();
+                }
 
-        private string ChannelName => $"[?delta=vcdiff]{Program.ChannelName}";
+                _decoder.SetBase(payload);
 
-        public async Task Start()
-        {
-            Console.WriteLine("Connecting Consumer");
-            await _client.ConnectAsync(_options);
-            await _client.SubscribeAsync(new TopicFilterBuilder().WithTopic(ChannelName).Build());
-            Console.WriteLine("### SUBSCRIBED ###");
-        }
-
-        private void OnSubscriberMessageReceived(MqttApplicationMessageReceivedEventArgs x)
-        {
-            var message = DecodeStringMessage();
-            var stats =
-                $"Payload Size: {x.ApplicationMessage.Payload.Length}. Decoded Message Size: {message.Length}. Saving: {message.Length - x.ApplicationMessage.Payload.Length}";
-            var item = $"Timestamp: {DateTime.Now:O} | Stats: {stats} | Topic: {x.ApplicationMessage.Topic} | Payload: {message} | QoS: {x.ApplicationMessage.QualityOfServiceLevel}";
-            Console.WriteLine(item);
-
-            string DecodeStringMessage()
+                return Encoding.UTF8.GetString(payload);
+            }
+            catch (Exception e)
             {
-                try
-                {
-                    var payload = x.ApplicationMessage.Payload;
-                    if (DeltaDecoder.IsDelta(payload))
-                    {
-                        var result = _decoder.ApplyDelta(payload);
-                        return result.AsUtf8String();
-                    }
-
-                    _decoder.SetBase(payload);
-
-                    return Encoding.UTF8.GetString(payload);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    return "";
-                }
+                Console.WriteLine(e);
+                return "";
             }
         }
     }
+}
 ```
 
 ## Support, feedback and troubleshooting

@@ -44,19 +44,19 @@ namespace IO.Ably.DeltaCodec.SampleApp
             Console.WriteLine("### SUBSCRIBED ###");
         }
 
-        private void OnSubscriberMessageReceived(MqttApplicationMessageReceivedEventArgs x)
+        private void OnSubscriberMessageReceived(MqttApplicationMessageReceivedEventArgs messageArgs)
         {
             var message = DecodeStringMessage();
             var stats =
-                $"Payload Size: {x.ApplicationMessage.Payload.Length}. Decoded Message Size: {message.Length}. Saving: {message.Length - x.ApplicationMessage.Payload.Length}";
-            var item = $"Timestamp: {DateTime.Now:O} | Stats: {stats} | Topic: {x.ApplicationMessage.Topic} | Payload: {message} | QoS: {x.ApplicationMessage.QualityOfServiceLevel}";
+                $"Payload Size: {messageArgs.ApplicationMessage.Payload.Length}. Decoded Message Size: {message.Length}. Saving: {message.Length - messageArgs.ApplicationMessage.Payload.Length}";
+            var item = $"Timestamp: {DateTime.Now:O} | Stats: {stats} | Topic: {messageArgs.ApplicationMessage.Topic} | Payload: {message} | QoS: {messageArgs.ApplicationMessage.QualityOfServiceLevel}";
             Console.WriteLine(item);
 
             string DecodeStringMessage()
             {
                 try
                 {
-                    var payload = x.ApplicationMessage.Payload;
+                    var payload = messageArgs.ApplicationMessage.Payload;
                     if (DeltaDecoder.IsDelta(payload))
                     {
                         var result = _decoder.ApplyDelta(payload);
