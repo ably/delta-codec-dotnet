@@ -8,8 +8,8 @@ namespace IO.Ably.DeltaCodec
     /// </summary>
     public class DeltaDecoder
     {
-        private byte[] @base;
-        private string baseId;
+        private byte[] _base;
+        private string _baseId;
 
         /// <summary>
         /// Checks if <paramref name="data"/> contains valid VCDIFF
@@ -23,54 +23,60 @@ namespace IO.Ably.DeltaCodec
 
         /// <summary>
         /// Applies the <paramref name="delta"/> to the result of applying the previous delta or to the base data if no previous delta has been applied yet.
-        /// Base data has to be set by <see cref="SetBase(byte[], string)"/> before calling this method for the first time. 
+        /// Base data has to be set by <see cref="SetBase(byte[], string)"/> before calling this method for the first time.
         /// </summary>
         /// <param name="delta">The delta to be applied</param>
         /// <param name="deltaId">(Optional) Sequence ID of the current delta application result. If set, it will be used for sequence continuity check during the next delta application</param>
         /// <param name="baseId">(Optional) Sequence ID of the expected previous delta application result. If set, it will be used to perform sequence continuity check agains the last preserved sequence ID</param>
         /// <returns><see cref="DeltaApplicationResult"/> instance</returns>
-        /// <exception cref="InvalidOperationException">The decoder is not initialized by calling <see cref="SetBase(object, string)"/></exception>
+        /// <exception cref="InvalidOperationException">The decoder is not initialized by calling <see cref="SetBase(byte[], string)"/></exception>
         /// <exception cref="SequenceContinuityException">The provided <paramref name="baseId"/> does not match the last preserved sequence ID</exception>
         /// <exception cref="ArgumentException">The provided <paramref name="delta"/> is not a valid VCDIFF</exception>
         /// <exception cref="DeltaCodec.Vcdiff.VcdiffFormatException"></exception>
         public DeltaApplicationResult ApplyDelta(byte[] delta, string deltaId = null, string baseId = null)
         {
-            if (this.@base == null)
+            if (_base == null)
             {
                 throw new InvalidOperationException($"Uninitialized decoder - {nameof(SetBase)}() should be called first");
             }
-            if (this.baseId != baseId)
+            if (_baseId != baseId)
             {
-                throw new SequenceContinuityException(baseId, this.baseId);
+                throw new SequenceContinuityException(baseId, _baseId);
             }
             if (HasVcdiffHeader(delta) == false)
             {
                 throw new ArgumentException($"The provided {nameof(delta)} is not a valid VCDIFF delta");
             }
-            
-            var result = ApplyDelta(this.@base, delta);
-            this.@base = result.AsByteArray();
-            this.baseId = deltaId;
+
+            var result = ApplyDelta(_base, delta);
+            _base = result.AsByteArray();
+            _baseId = deltaId;
             return result;
         }
 
+        /// <summary>
+        /// Static stateless helper method that can apply a <paramref name="delta"/> to <paramref name="base"/> payload.
+        /// </summary>
+        /// <param name="base">The base payload</param>
+        /// <param name="delta">The delta to be applied</param>
+        /// <returns><see cref="DeltaApplicationResult"/> instance</returns>
         public static DeltaApplicationResult ApplyDelta(byte[] @base, byte[] delta)
         {
             using (MemoryStream baseStream = new MemoryStream(@base))
             using (MemoryStream deltaStream = new MemoryStream(delta))
             using (MemoryStream decodedStream = new MemoryStream())
             {
-                DeltaCodec.Vcdiff.VcdiffDecoder.Decode(baseStream, deltaStream, decodedStream);
+                Vcdiff.VcdiffDecoder.Decode(baseStream, deltaStream, decodedStream);
 
                 return new DeltaApplicationResult(decodedStream.ToArray());
             }
         }
 
         /// <summary>
-        /// Sets the base object used for the next delta application (see <see cref="ApplyDelta(object, string, string)"/>).
+        /// Sets the base object used for the next delta application (see <see cref="ApplyDelta(byte[], string, string)"/>).
         /// </summary>
         /// <param name="newBase">The base object to be set</param>
-        /// <param name="newBaseId">(Optional) The <paramref name="newBase"/>'s sequence ID, to be used for sequence continuity checking when delta is applied using <see cref="ApplyDelta(object, string, string)"/></param>
+        /// <param name="newBaseId">(Optional) The <paramref name="newBase"/>'s sequence ID, to be used for sequence continuity checking when delta is applied using <see cref="ApplyDelta(byte[], string, string)"/></param>
         /// <exception cref="ArgumentNullException">The provided <paramref name="newBase"/> parameter is null.</exception>
         public void SetBase(byte[] newBase, string newBaseId = null)
         {
@@ -79,8 +85,8 @@ namespace IO.Ably.DeltaCodec
                 throw new ArgumentNullException($"{nameof(newBase)} cannot be null");
             }
 
-            this.@base = newBase;
-            this.baseId = newBaseId;
+            _base = newBase;
+            _baseId = newBaseId;
         }
 
         private static bool HasVcdiffHeader(byte[] delta)
