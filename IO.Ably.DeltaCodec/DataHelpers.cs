@@ -21,15 +21,14 @@ namespace IO.Ably.DeltaCodec
             {
                 return data as byte[];
             }
-            else if (data is string)
+
+            if (data is string)
             {
-                string dataAsString = data as string;
+                var dataAsString = data as string;
                 return TryConvertFromBase64String(dataAsString, out byte[] result) ? result : Encoding.UTF8.GetBytes(dataAsString);
             }
-            else
-            {
-                throw new ArgumentException("data parameter can only be of type `byte[]` or `string`");
-            }
+
+            throw new ArgumentException("data parameter can only be of type `byte[]` or `string`");
         }
 
         /// <summary>
@@ -41,8 +40,8 @@ namespace IO.Ably.DeltaCodec
         /// <returns>`true` or `false` depending on whether the conversion succeeded.</returns>
         public static bool TryConvertToDeltaByteArray(object obj, out byte[] delta)
         {
-            byte[] dataAsByteArray = obj as byte[];
-            string dataAsString = obj as string;
+            var dataAsByteArray = obj as byte[];
+            var dataAsString = obj as string;
             if (dataAsByteArray != null || (dataAsString != null && TryConvertFromBase64String(dataAsString, out dataAsByteArray)))
             {
                 delta = dataAsByteArray;

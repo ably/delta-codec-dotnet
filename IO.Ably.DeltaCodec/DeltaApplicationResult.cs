@@ -7,30 +7,30 @@ namespace IO.Ably.DeltaCodec
     /// </summary>
     public class DeltaApplicationResult
     {
-        private readonly byte[] data;
+        private readonly byte[] _data;
 
         internal DeltaApplicationResult(byte[] data)
         {
-            this.data = data;
+            _data = data;
         }
-        
+
         /// <summary>
         /// Exports the delta application result as byte[]
         /// </summary>
         /// <returns>byte[] representation of this delta application result</returns>
         public byte[] AsByteArray()
         {
-            return this.data;
+            return _data;
         }
 
         /// <summary>
-        /// Exports the delta application result as string assuming the bytes in the result represent 
+        /// Exports the delta application result as string assuming the bytes in the result represent
         /// an UTF-8 encoded string.
         /// </summary>
         /// <returns>The UTF-8 string representation of this delta application result</returns>
         public string AsUtf8String()
         {
-            return Encoding.UTF8.GetString(this.data);
+            return Encoding.UTF8.GetString(_data);
         }
     }
 }

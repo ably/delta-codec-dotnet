@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using IO.Ably.DeltaCodec.Vcdiff;
 
 namespace IO.Ably.DeltaCodec
 {
@@ -27,7 +28,7 @@ namespace IO.Ably.DeltaCodec
         /// </summary>
         /// <param name="delta">The delta to be applied</param>
         /// <param name="deltaId">(Optional) Sequence ID of the current delta application result. If set, it will be used for sequence continuity check during the next delta application</param>
-        /// <param name="baseId">(Optional) Sequence ID of the expected previous delta application result. If set, it will be used to perform sequence continuity check agains the last preserved sequence ID</param>
+        /// <param name="baseId">(Optional) Sequence ID of the expected previous delta application result. If set, it will be used to perform sequence continuity check against the last preserved sequence ID</param>
         /// <returns><see cref="DeltaApplicationResult"/> instance</returns>
         /// <exception cref="InvalidOperationException">The decoder is not initialized by calling <see cref="SetBase(byte[], string)"/></exception>
         /// <exception cref="SequenceContinuityException">The provided <paramref name="baseId"/> does not match the last preserved sequence ID</exception>
@@ -62,11 +63,11 @@ namespace IO.Ably.DeltaCodec
         /// <returns><see cref="DeltaApplicationResult"/> instance</returns>
         public static DeltaApplicationResult ApplyDelta(byte[] @base, byte[] delta)
         {
-            using (MemoryStream baseStream = new MemoryStream(@base))
-            using (MemoryStream deltaStream = new MemoryStream(delta))
-            using (MemoryStream decodedStream = new MemoryStream())
+            using (var baseStream = new MemoryStream(@base))
+            using (var deltaStream = new MemoryStream(delta))
+            using (var decodedStream = new MemoryStream())
             {
-                Vcdiff.VcdiffDecoder.Decode(baseStream, deltaStream, decodedStream);
+                VcdiffDecoder.Decode(baseStream, deltaStream, decodedStream);
 
                 return new DeltaApplicationResult(decodedStream.ToArray());
             }
