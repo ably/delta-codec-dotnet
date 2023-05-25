@@ -126,7 +126,7 @@ public class ConsumerSample
 
 ## Support, feedback and troubleshooting
 
-Please visit http://support.ably.io/ for access to our knowledge base and to ask for any assistance.
+Please visit https://ably.com/support for access to our knowledge base and to ask for any assistance.
 
 You can also view the [community reported GitHub issues](https://github.com/ably/delta-codec-dotnet/issues).
 
