@@ -4,8 +4,7 @@ C# VCDiff decoder library used internally by the Ably client library. The implem
 
 ## Supported platforms
 
-The library is targeting netstandard 1.3.
-
+The library targets .NET Standard 2.0 which is compatible with cross-platform .Net ecosystem.
 ## General Use
 
 The `DeltaDecoder` class is an entry point to the public API. It provides a stateful way of applying a stream of `vcdiff` deltas.
@@ -132,12 +131,53 @@ You can also view the [community reported GitHub issues](https://github.com/ably
 
 To see what has changed in recent versions, see the [CHANGELOG](CHANGELOG.md).
 
+## Building and Testing
+
+### Prerequisites
+- .NET 6.0 SDK or later
+
+### Build Commands
+
+Clean the solution:
+```bash
+dotnet clean
+```
+
+Restore dependencies:
+```bash
+dotnet restore
+```
+
+Build the solution:
+```bash
+dotnet build --configuration Release
+```
+
+Run tests:
+```bash
+dotnet test
+```
+
+### Creating NuGet Package
+
+To create a NuGet package:
+```bash
+dotnet pack --configuration Release
+```
+
+To create a NuGet package with a specific version:
+```bash
+dotnet pack --configuration Release -p:Version=1.0.0
+```
+
+The package will be created in `IO.Ably.DeltaCodec/bin/Release/` directory.
+
 ## Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Ensure you have added suitable tests and the test suite is passing(`dotnet test`)
+4. Ensure you have added suitable tests and the test suite is passing (`dotnet test`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create a new Pull Request
 
