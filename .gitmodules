@@ -1,0 +1,3 @@
+[submodule "IO.Ably.DeltaCodec.Test/vcdiff-tests"]
+	path = IO.Ably.DeltaCodec.Test/vcdiff-tests
+	url = https://github.com/ably/vcdiff-tests.git
