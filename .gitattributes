@@ -1,0 +1,4 @@
+# Ensure test data files are treated as binary to prevent line ending conversions
+IO.Ably.DeltaCodec.Test/TestData/xdelta/**/dictionary binary
+IO.Ably.DeltaCodec.Test/TestData/xdelta/**/delta binary
+IO.Ably.DeltaCodec.Test/TestData/xdelta/**/target binary
