@@ -6,9 +6,14 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
 
     steps:
       - name: Checkout code
