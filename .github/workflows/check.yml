@@ -6,18 +6,24 @@ on:
     branches:
       - main
 
+permissions: {}
+
 jobs:
   check:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           submodules: 'recursive'
+          persist-credentials: false
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@55ec9447dda3d1cf6bd587150f3262f30ee10815 # v3.4.2
         with:
           dotnet-version: 6.0.x
 
@@ -31,7 +37,7 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal --logger "junit;LogFileName=unit.junit"
 
       - name: View unit test results
-        uses: dorny/test-reporter@v1
+        uses: dorny/test-reporter@31a54ee7ebcacc03a09ea97a7e5465a47b84aea5 # v1.9.1
         if: success() || failure()
         with:
           name: Unit Test Results
